@@ -2,6 +2,13 @@
     box-sizing: border-box;
 }
 
+:root {
+    --box-shadow-y-offset: 30px;
+    --box-shadow-blur: 10px;
+    --box-shadow-spread: 4px;
+    --box-shadow-color: rgba(12, 23, 41, 0.7);
+  }
+
 html {
     font-size: 16px;
     height: 100%;
@@ -21,19 +28,21 @@ main {
     top: 50%;
     transform: translateY(-50%);
     width: 90%;
-    height: 80%;
+    height: 85%;
     background-color: hsl(216, 50%, 16%);
     border-radius: 0.9375rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 
+    8px var(--box-shadow-y-offset) var(--box-shadow-blur) var(--box-shadow-spread) var(--box-shadow-color),
+   -8px var(--box-shadow-y-offset) var(--box-shadow-blur) var(--box-shadow-spread) var(--box-shadow-color);
 }
 
 .image-container, .description-container, .owner-container {
     margin: 0.9375rem 0;
     width: 80%;
     flex-basis: 0;
-    flex-shrink: 1;
 }
 
 .image-container, .image-container::before, .equilbirum-image {
@@ -46,12 +55,27 @@ main {
 }
 
 .image-container::before {
+    content: attr(before-attr);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.35s ease-in-out;
+}
+
+.image-container::after {
     content: attr(after-attr);
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    background-image: url("../images/icon-show.png");
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    visibility: hidden;
+    transition: all 0.1s linear;
 }
 
 .equilbirum-image{
@@ -59,24 +83,13 @@ main {
     height: 100%;
 }
 
-.show-icon {
-    position: absolute;
-    width: 2.5rem;
-    height: 2.5rem;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    display: none;
-    z-index: 50;
-}
-
-.show-icon:hover {
-    display: inline-block;
-}
-
 .image-container:hover::before {
     background-color: #03B8C9;
     opacity: 0.74;
+}
+
+.image-container:hover::after {
+    visibility: visible;
     cursor: pointer;
 }
 
@@ -90,6 +103,13 @@ main {
     color: white;
     font-weight: 600;
     margin-top: 0;
+    transition: all 0.2s ease-in-out;
+    width: 73%;
+}
+
+.description-container h2:hover {
+    color: rgb(6, 255, 254);
+    cursor: pointer;
 }
 
 .description-container p {
@@ -120,8 +140,10 @@ main {
 
 hr {
     margin-top: 1.25rem;
+    background-color: transparent;
     border: none;
-    border-top: 0.0625rem solid;
+    border-bottom: 0.125rem solid rgb(40, 58, 82);
+    border-radius: 0.125rem;
 }
 
 .owner-container {
@@ -139,19 +161,69 @@ hr {
 
 .owner-container p {
     display: inline-block;
-    color: white;
+    color: #879CBC;
 }
 
 .owner-container span {
-    color: #879CBC;
+    color: white;
+    transition: all 0.2s ease-in-out;
+}
+
+.owner-container span:hover {
+    color: rgb(6, 255, 254);
+    cursor: pointer;
 }
 
 .owner-container img, .owner-container p {
     vertical-align: middle;
 }
 
-/* .attribution {
-    width: 100px;
-    height: 50px;
-    background-color: red;;
-} */
+.attribution {
+    position: absolute;
+    width: 90%;
+    height: 25px;
+    font-size: 13px;
+    top: 94%;
+    color: white;
+    text-align: center;
+    background-color: transparent;
+}
+
+a:link {
+    color:rgb(53, 115, 170);
+}
+
+a:visited {
+    color: rgb(180, 110, 122);
+}
+
+a:hover {
+    color: hotpink;
+}
+
+a:active {
+    color: rgb(129, 55, 226);
+}
+
+@media (min-width: 376px) {
+    main {
+        width: 380px;
+        height: 600px;
+    }
+
+    .owner-container {
+        padding-bottom: 0.625rem;
+    }
+
+    hr {
+        margin-bottom: none;
+    }
+
+    .description-container h2 {
+        width: 65%;
+    }
+
+    .attribution {
+        width: 380px;
+    }
+}
